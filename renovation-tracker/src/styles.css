@@ -23,7 +23,7 @@ h4 { font-size: 0.95rem; margin-top: 1.2rem; color: var(--muted); text-transform
 
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0.75rem 1.5rem; background: #1f2933; color: #fff;
+  padding: 0.75rem 1.5rem; background: #0f766e; color: #fff;
   position: sticky; top: 0; z-index: 10;
 }
 .topbar h1 { font-size: 1.2rem; margin: 0; cursor: pointer; }
