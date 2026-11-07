@@ -17,7 +17,7 @@ npm run build      # type-checks, then writes the app to ~/ipad-hello/renovation
 cd ~/ipad-hello && git add -A && git commit -m "Update renovation tracker" && git push
 ```
 
-Open the app once while online to pick up the new version. It downloads in the background and applies on the next launch.
+Updating on the iPad: just open the existing app while online. It checks for a new version at launch, whenever you switch back to it, and every 30 minutes, then reloads by itself (it waits if you're typing or a dialog is open). The title bar shows the build date and time, so you can see which version is running. Updates never touch your data. Don't delete and re-add the icon to update: each Home Screen icon has its own storage, and deleting one erases its data.
 
 Moving data between the Mac and the iPad: Settings & backup → Export backup on one device, AirDrop the file, then Import backup on the other. On iPad, Export opens the share sheet (Save to Files, AirDrop, Mail).
 

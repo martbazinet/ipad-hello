@@ -34,7 +34,9 @@ export function App() {
   return (
     <>
       <header className="topbar">
-        <h1 onClick={home}>Renovation Tracker</h1>
+        <h1 onClick={home}>
+          Renovation Tracker <span className="app-version">v {__APP_VERSION__}</span>
+        </h1>
         <nav>
           <button className={active('dashboard')} onClick={home}>
             Dashboard
