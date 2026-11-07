@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hello iPad</title>
+
+  <!-- PWA / iOS home-screen support -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Hello iPad">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="icon" href="icon-192.png">
+
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      margin: 0; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
+      font-family: -apple-system, system-ui, sans-serif;
+      padding: env(safe-area-inset-top) 1rem env(safe-area-inset-bottom);
+      text-align: center;
+    }
+    h1 { font-size: 3rem; margin: 0; }
+    .status { padding: .4rem 1rem; border-radius: 999px; font-weight: 600; color: #fff; }
+    .online  { background: #16a34a; }
+    .offline { background: #dc2626; }
+    button {
+      font-size: 1.5rem; padding: .8rem 2rem; border: 0; border-radius: 12px;
+      background: #2563eb; color: #fff;
+    }
+    small { opacity: .6; }
+  </style>
+</head>
+<body>
+  <h1>Hello, iPad 👋</h1>
+  <div id="status" class="status">…</div>
+  <p>You tapped <strong id="count">0</strong> times (saved on this device).</p>
+  <button id="tap">Tap me</button>
+  <button id="reset" style="background:#6b7280;font-size:1rem;padding:.5rem 1rem">Reset</button>
+  <small id="mode"></small>
+
+  <script>
+    // Online/offline indicator
+    const statusEl = document.getElementById('status');
+    function updateStatus() {
+      const on = navigator.onLine;
+      statusEl.textContent = on ? 'Online' : 'Offline – still working!';
+      statusEl.className = 'status ' + (on ? 'online' : 'offline');
+    }
+    addEventListener('online', updateStatus);
+    addEventListener('offline', updateStatus);
+    updateStatus();
+
+    // Counter persisted in localStorage
+    const countEl = document.getElementById('count');
+    let count = Number(localStorage.getItem('count') || 0);
+    countEl.textContent = count;
+    document.getElementById('tap').onclick = () => {
+      localStorage.setItem('count', ++count);
+      countEl.textContent = count;
+    };
+    document.getElementById('reset').onclick = () => {
+      count = 0; localStorage.setItem('count', 0); countEl.textContent = 0;
+    };
+
+    // Show whether we're running as an installed home-screen app
+    const standalone = navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+    document.getElementById('mode').textContent =
+      standalone ? 'Running as installed app' : 'Running in browser – use Share → Add to Home Screen';
+
+    // Register the service worker (enables offline)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
